@@ -1,0 +1,56 @@
+<p-drawer
+  header="Add Todo"
+  [(visible)]="visible"
+  position="bottom"
+  styleClass="h-auto!"
+>
+  <ng-template #footer>
+    <div class="p-2 flex overflow-visible flex-col gap-2 w-full">
+      <div class="flex flex-col gap-1.5 w-full">
+        <label for="">What you need to do ?</label>
+        <input
+          type="text"
+          [(ngModel)]="text"
+          name="text"
+          id="text"
+          pInputText
+          class="w-full"
+        />
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <label for=""> When you need to do it ?</label>
+        <p-datepicker [(ngModel)]="date" class="z-200! w-fit!" />
+      </div>
+      <div>
+        <button pButton (click)="AddTodo()">Add</button>
+      </div>
+    </div>
+  </ng-template>
+</p-drawer>
+
+<div class="flex flex-col gap-3 w-[400px]">
+  <button pButton (click)="visible = true" class="w-fit" icon="pi pi-plus">
+    Add Todo
+  </button>
+
+  <div class="flex flex-col gap-2.5">
+    @for (t of Todo; track t.id) {
+    <div
+      class="w-[500px] items-center flex justify-between border rounded-md p-2.5"
+    >
+      <p>{{ t.text }}</p>
+      <p class="underline">
+        {{ t.date | date }}
+      </p>
+      <button
+        class="bg-red-400! text-white!"
+        pButton
+        (click)="DeleteTodo(t.id)"
+      >
+        Delete
+      </button>
+    </div>
+
+    }
+  </div>
+</div>
