@@ -1,56 +1,46 @@
-<p-drawer
-  header="Add Todo"
-  [(visible)]="visible"
-  position="bottom"
-  styleClass="h-auto!"
->
-  <ng-template #footer>
-    <div class="p-2 flex overflow-visible flex-col gap-2 w-full">
-      <div class="flex flex-col gap-1.5 w-full">
-        <label for="">What you need to do ?</label>
-        <input
-          type="text"
-          [(ngModel)]="text"
-          name="text"
-          id="text"
-          pInputText
-          class="w-full"
-        />
-      </div>
-      <div class="flex flex-col gap-1.5">
-        <label for=""> When you need to do it ?</label>
-        <p-datepicker [(ngModel)]="date" class="z-200! w-fit!" />
-      </div>
-      <div>
-        <button pButton (click)="AddTodo()">Add</button>
-      </div>
-    </div>
-  </ng-template>
-</p-drawer>
+<main>
+  <app-add-form></app-add-form>
 
-<div class="flex flex-col gap-3 w-[400px]">
-  <button pButton (click)="visible = true" class="w-fit" icon="pi pi-plus">
-    Add Todo
-  </button>
-
-  <div class="flex flex-col gap-2.5">
-    @for (t of Todo; track t.id) {
+  <section class="flex flex-col space-y-5 mt-2.5">
+    @for (t of todoService.TodoArray; track t.id) {
     <div
-      class="w-[500px] items-center flex justify-between border rounded-md p-2.5"
+      class="animate-enter animate-leave flex w-[500px] items-center border p-3 rounded-md justify-between select-none capitalize cursor-pointer"
+      id="t.id"
     >
-      <p>{{ t.text }}</p>
-      <p class="underline">
-        {{ t.date | date }}
-      </p>
-      <button
-        class="bg-red-400! text-white!"
-        pButton
-        (click)="DeleteTodo(t.id)"
+      <div
+        (click)="t.done = !t.done"
+        class="flex justify-between items-center w-full p-2.5 h-full"
       >
-        Delete
-      </button>
-    </div>
+        <p-check-box
+          [value]="t"
+          [inputId]="t.id + ''"
+          [(ngModel)]="t.done"
+          binary="true"
+        />
+        <label
+          [for]="t.id"
+          [ngClass]="t.done ? 'line-through text-gray-500' : ''"
+        >
+          {{ t.text }}
+        </label>
+        <span>{{ t.date | date }}</span>
+      </div>
 
+      <div class="flex gap-2">
+        <app-edit-form [todo]="t"></app-edit-form>
+        <button
+          badgeSeverity="warning"
+          pButton
+          icon="pi pi-trash"
+          size="small"
+          class="hover:bg-red-400! hover:text-white!"
+          (click)="onDeleteTodo(t.id!)"
+        >
+          delete
+        </button>
+      </div>
+    </div>
     }
-  </div>
-</div>
+  </section>
+  <p-toast />
+</main>

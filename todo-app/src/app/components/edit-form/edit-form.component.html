@@ -1,0 +1,37 @@
+<div>
+  <button
+    pButton
+    icon="pi pi-pencil"
+    size="small"
+    class="hover:bg-blue-400! hover:text-white!"
+    (click)="showDialog()"
+  >
+    Edit
+  </button>
+  <p-dialog [(visible)]="visible" header="Edit todo">
+    <ng-template #footer>
+      <form
+        [formGroup]="form"
+        class="flex flex-col space-y-5 w-[400px]"
+        (ngSubmit)="onSubmit()"
+      >
+        <label>What u need to do :</label>
+        <input
+          type="text"
+          pInputText
+          formControlName="text"
+          [placeholder]="todo()?.text"
+        />
+        <label
+          >When u need to do it :
+          <span class="text-sm text-gray-500"
+            >the old date : ( {{ todo()?.date | date }} )</span
+          ></label
+        >
+        <p-datepicker formControlName="date" />
+        <button pButton type="submit">save</button>
+      </form>
+    </ng-template>
+  </p-dialog>
+  <p-toast />
+</div>

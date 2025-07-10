@@ -1,44 +1,50 @@
-import { Component } from '@angular/core';
+import { TODO } from './../utils/interfaces';
+import { Component, inject } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { DatePickerModule } from 'primeng/datepicker';
 import { DrawerModule } from 'primeng/drawer';
+import { AddFormComponent } from './components/add-form/add-form.component';
+import { CheckboxModule } from 'primeng/checkbox';
+import { FormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { TodoService } from './todo.service';
+import { EditFormComponent } from './components/edit-form/edit-form.component';
+
 @Component({
   selector: 'app-root',
   imports: [
-    FormsModule,
     CommonModule,
     InputTextModule,
     DialogModule,
     ButtonModule,
     DatePickerModule,
     DrawerModule,
+    AddFormComponent,
+    CheckboxModule,
+    FormsModule,
+    ToastModule,
+    EditFormComponent,
   ],
+  providers: [MessageService],
+
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'todo-app';
-  visible: boolean = false;
-  text: string = '';
-  date: string = '';
-  id: number = 0;
-  Todo: { id: number; date: string; text: string }[] = [];
+  todoService = inject(TodoService);
 
-  showDialog() {
-    this.visible = true;
-  }
+  constructor(private messageService: MessageService) {}
 
-  AddTodo() {
-    this.Todo.push({ id: this.id, date: this.date, text: this.text });
-    this.id++;
-  }
-
-  DeleteTodo(id: number) {
-    this.Todo = this.Todo.filter((todo) => todo.id != id);
+  onDeleteTodo(id: number) {
+    this.todoService.DeleteTodo(id);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Delete',
+      detail: 'Todo Deleted',
+      life: 3000,
+    });
   }
 }

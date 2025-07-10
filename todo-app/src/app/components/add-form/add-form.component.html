@@ -1,0 +1,26 @@
+<main>
+  <button pButton class="w-fit" icon="pi pi-plus" (click)="visible = true">
+    Add Todo
+  </button>
+  <p-drawer [(visible)]="visible" header="Add Todo">
+    <form
+      (ngSubmit)="onSubmit()"
+      [formGroup]="form"
+      class="flex flex-col justify-between h-full"
+    >
+      <div class="flex flex-col space-y-3">
+        <label>what u need to do ?</label>
+        <input
+          pInputText
+          type="text"
+          formControlName="text"
+          [invalid]="isInvalid('text')"
+        />
+        <label>When u need to do it ?</label>
+        <p-date-picker formControlName="date" [invalid]="isInvalid('date')" />
+      </div>
+      <button type="submit" pButton>Add</button>
+    </form>
+  </p-drawer>
+  <p-toast />
+</main>
