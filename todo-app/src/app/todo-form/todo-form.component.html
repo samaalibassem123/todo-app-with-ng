@@ -1,8 +1,24 @@
 <main>
+  @if (EditTodo()) {
+  <button
+    pButton
+    icon="pi pi-pencil"
+    size="small"
+    class="hover:bg-blue-400! hover:text-white!"
+    (click)="visible = true"
+  >
+    Edit
+  </button>
+  }@else{
   <button pButton class="w-fit" icon="pi pi-plus" (click)="visible = true">
     Add Todo
   </button>
-  <p-drawer [(visible)]="visible" header="Add Todo">
+  }
+
+  <p-drawer [(visible)]="visible">
+    <ng-template #header>
+      <h1 class="text-2xl">@if (EditTodo()) { Edit Todo }@else { Add Todo }</h1>
+    </ng-template>
     <form
       (ngSubmit)="onSubmit()"
       [formGroup]="form"
@@ -19,7 +35,7 @@
         <label>When u need to do it ?</label>
         <p-date-picker formControlName="date" [invalid]="isInvalid('date')" />
       </div>
-      <button type="submit" pButton>Add</button>
+      <button type="submit" pButton>Save</button>
     </form>
   </p-drawer>
   <p-toast />

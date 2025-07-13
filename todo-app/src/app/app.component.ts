@@ -6,13 +6,12 @@ import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { DatePickerModule } from 'primeng/datepicker';
 import { DrawerModule } from 'primeng/drawer';
-import { AddFormComponent } from './components/add-form/add-form.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { TodoService } from './todo.service';
-import { EditFormComponent } from './components/edit-form/edit-form.component';
+import { TodoFormComponent } from './todo-form/todo-form.component';
 
 @Component({
   selector: 'app-root',
@@ -23,11 +22,10 @@ import { EditFormComponent } from './components/edit-form/edit-form.component';
     ButtonModule,
     DatePickerModule,
     DrawerModule,
-    AddFormComponent,
     CheckboxModule,
     FormsModule,
     ToastModule,
-    EditFormComponent,
+    TodoFormComponent,
   ],
   providers: [MessageService],
 
